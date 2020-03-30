@@ -66,6 +66,7 @@ export default function Register() {
             placeholder="WhatsApp"
             value={whatsapp}
             type="number"
+            maxLength={11}
             onChange={e => setWhatsapp(e.target.value)}
           />
 
