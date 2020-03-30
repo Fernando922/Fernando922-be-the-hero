@@ -33,6 +33,19 @@ describe("ONG", () => {
     return newOng;
   };
 
+  const createCase = async () => {
+    const ong = await createOng();
+    const newCase = await request(app)
+      .post("/incidents")
+      .set("Authorization", ong.body.id)
+      .send({
+        title: "Bootcamp",
+        description: "preciso de dinheiro pra bancar o bootcamp GoStack",
+        value: "1900"
+      });
+    return { newCase, ong };
+  };
+
   it("should be able to create a new ONG", async () => {
     const newOng = await createOng();
     expect(newOng.body).toHaveProperty("id");
@@ -48,19 +61,6 @@ describe("ONG", () => {
       });
     expect(sessionResponse.body).toHaveProperty("name");
   });
-
-  const createCase = async () => {
-    const ong = await createOng();
-    const newCase = await request(app)
-      .post("/incidents")
-      .set("Authorization", ong.body.id)
-      .send({
-        title: "Bootcamp",
-        description: "preciso de dinheiro pra bancar o bootcamp GoStack",
-        value: "1900"
-      });
-    return { newCase, ong };
-  };
 
   it("should be able to create a case", async () => {
     const { newCase } = await createCase();
